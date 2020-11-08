@@ -30,6 +30,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Main Role
+    |--------------------------------------------------------------------------
+    |
+    | This value equals the name of the default super user of the application
+    |
+    */
+    'superuser_role' => env('APP_SUPERUSER_ROLE', 'overlord'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Debug Mode
     |--------------------------------------------------------------------------
     |
@@ -174,6 +184,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\PermissionsServiceProvider::class,
 
     ],
 
