@@ -56,6 +56,15 @@ class PermissionController extends Controller
 
     }
 
+    public function upgrade_overlord(){
+        $roles = Role::where('slug', '!=', 'overlord')->get();
+        $overlord = User::where('email', 'overlord@gmail.com')->first();
+
+        $overlord->roles()->attach($roles);
+
+        return redirect()->back();
+    }
+
     public function permission()
     {
         $dev_permission = Permission::where('slug', 'create-tasks')->first();
@@ -96,7 +105,7 @@ class PermissionController extends Controller
 
         $deejay = new User();
         $deejay->name = 'Mahedi Hasan';
-        $deejay->email = 'mahedi@gmail.com';
+        $deejay->email = 'deejay@gmail.com';
         $deejay->password = bcrypt('secrettt');
         $deejay->save();
         $deejay->roles()->attach($dj_role);
@@ -104,7 +113,7 @@ class PermissionController extends Controller
 
         $manager = new User();
         $manager->name = 'Hafizul Islam';
-        $manager->email = 'hafiz@gmail.com';
+        $manager->email = 'manager@gmail.com';
         $manager->password = bcrypt('secrettt');
         $manager->save();
         $manager->roles()->attach($manager_role);
