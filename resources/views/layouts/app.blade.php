@@ -12,7 +12,7 @@
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-blue-300 h-32">
         <h1 class="text-3xl text-center text-white py-auto">Music collection</h1>
-        @yield('head-nav')
+        @include('layouts.partials.head-nav')
     </header>
 
     <main class="container mx-auto">    

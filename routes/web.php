@@ -19,12 +19,13 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/init', [App\Http\Controllers\PermissionController::class, 'init'])->name('init');
 
+Route::get('/genres', [App\Http\Controllers\GenreController::class, 'index'])->name('genre-home');
 Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index'])->name('artists-home');
+
 Route::group(['middleware' => 'role:overlord'], function(){
     Route::get('/roles', [App\Http\Controllers\PermissionController::class, 'permission'])->name('permissions');
     Route::get('/upgrade-overlord', [App\Http\Controllers\PermissionController::class, 'upgrade_overlord'])->name('upgrade');
 });
-
 
 Route::group(['middleware' => 'role:deejay'], function(){
     Route::get('/deejay', function(){
