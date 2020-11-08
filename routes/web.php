@@ -18,3 +18,15 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/roles', [App\Http\Controllers\PermissionController::class, 'permission'])->name('permissions');
+
+Route::group(['middleware' => 'role:deejay'], function(){
+    Route::get('/deejay', function(){
+        return "Only for deejays";
+    });
+});
+
+Route::group(['middleware' => 'role:manager'], function(){
+    Route::get('/admin', function(){
+        return "Admin- Only";
+    });
+});
