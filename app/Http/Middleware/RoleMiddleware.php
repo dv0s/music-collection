@@ -16,6 +16,10 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, $role, $permission = null)
     {
+        if($request->user()->hasRole(config('app.superuser_role'))){
+            return $next($request);
+        }
+
         if (!$request->user()->hasRole($role)) {
 
             abort(404);
