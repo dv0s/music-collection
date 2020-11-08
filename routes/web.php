@@ -18,6 +18,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/roles', [App\Http\Controllers\PermissionController::class, 'permission'])->name('permissions');
+Route::get('/init-overlord', [App\Http\Controllers\PermissionController::class, 'init'])->name('init');
 
 Route::group(['middleware' => 'role:deejay'], function(){
     Route::get('/deejay', function(){

@@ -9,6 +9,53 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
+    public function init(){
+        $overlord_perm = Permission::all();
+
+        $overlord_role = new Role();
+        $overlord_role->slug = 'overlord';
+        $overlord_role->name = 'System Overlord';
+        $overlord_role->save();
+        $overlord_role->permissions()->attach($overlord_perm);
+
+        $overlord_role = Role::where('slug', 'overlord')->first();
+
+        $permissions_array = [
+            "createUser" => ["create-user", "Create User"],
+            "editUser" => ["edit-user", "Edit User"],
+            "deleteUser" => ["delete-user", "Delete User"],
+            "createRole" => ["create-role", "Create Role"],
+            "editRole" => ["edit-role", "Edit Role"],
+            "deleteRole" => ["delete-role", "Delete Role"],
+            "createPermission" => ["create-permission", "Create Permission"],
+            "editPermission" => ["edit-permission", "Edit Permission"],
+            "deletePermission" => ["delete-permission", "Delete Permission"]
+        ];
+
+        foreach ($permissions_array as $var => $settings){
+            if(Permission::where('slug', $settings[1])->exists()){
+                continue;
+            }
+
+            ${$var} = new Permission();
+            ${$var}->slug = $settings[0];
+            ${$var}->name = $settings[1];
+            ${$var}->save();
+            ${$var}->roles()->attach($overlord_role);
+        }
+
+        $overlord_perms = Permission::all();
+
+        $overlord = new User();
+        $overlord->name = 'D. van Os';
+        $overlord->email = 'overlord@gmail.com';
+        $overlord->password = bcrypt('Overlord');
+        $overlord->save();
+        $overlord->roles()->attach($overlord);
+        $overlord->permissions()->attach($overlord_perms);
+
+    }
+
     public function permission()
     {
         $dev_permission = Permission::where('slug', 'create-tasks')->first();
