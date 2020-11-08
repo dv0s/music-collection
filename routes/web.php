@@ -17,8 +17,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::get('/roles', [App\Http\Controllers\PermissionController::class, 'permission'])->name('permissions');
-Route::get('/init-overlord', [App\Http\Controllers\PermissionController::class, 'init'])->name('init');
+Route::get('/init', [App\Http\Controllers\PermissionController::class, 'init'])->name('init');
+
+Route::group(['middleware' => 'role:overlord'], function(){
+    Route::get('/roles', [App\Http\Controllers\PermissionController::class, 'permission'])->name('permissions');
+    Route::get('/upgrade-overlord', [App\Http\Controllers\PermissionController::class, 'upgrade_overlord'])->name('upgrade');
+});
+
 
 Route::group(['middleware' => 'role:deejay'], function(){
     Route::get('/deejay', function(){
@@ -27,7 +32,7 @@ Route::group(['middleware' => 'role:deejay'], function(){
 });
 
 Route::group(['middleware' => 'role:manager'], function(){
-    Route::get('/admin', function(){
-        return "Admin- Only";
+    Route::get('/manager', function(){
+        return "Only for managers";
     });
 });
