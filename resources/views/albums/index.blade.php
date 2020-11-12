@@ -9,5 +9,5 @@
 @endpush
 
 @section('main')
-    Albums home
+    <h1 class="text-2xl">Albums home</h1>
 @endsection

@@ -12,7 +12,6 @@
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-blue-300 h-32">
         <h1 class="text-4xl text-center text-white py-6"><a href="{{ url('/') }}">Music collection</a></h1>
-        @include('layouts.partials.head-nav')
     </header>
 
     <main class="container mx-auto">

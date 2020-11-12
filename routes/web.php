@@ -24,6 +24,7 @@ Route::get('/init', [App\Http\Controllers\PermissionController::class, 'init'])-
 Route::get('/genres', [App\Http\Controllers\GenreController::class, 'index'])->name('genre-home');
 Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index'])->name('artist-home');
 Route::get('/albums', [App\Http\Controllers\AlbumController::class, 'index'])->name('album-home');
+Route::get('/songs', [App\Http\Controllers\SongController::class, 'index'])->name('song-home');
 
 Route::group(['middleware' => 'role:overlord'], function(){
     Route::get('/roles', [App\Http\Controllers\PermissionController::class, 'permission'])->name('permissions');

@@ -89,7 +89,7 @@
             </li>
             @role('manager')
             <li class="my-px">
-                <a href="#"
+                <a href="{{ route('song-home') }}"
                     class="flex flex-row items-center h-12 px-4 rounded-lg text-gray-600 hover:bg-gray-100">
                     <span class="flex items-center justify-center text-lg text-green-400">
                         <svg class="w-6 h-6" 
