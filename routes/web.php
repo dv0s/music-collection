@@ -45,23 +45,23 @@ Route::group(['middleware' => 'role:manager'], function(){
 
 # Overlord Section
 Route::group(['middleware' => 'role:overlord'], function(){
-    Route::prefix('overlord-permission-')->group(function(){
-        Route::get('/permissions', [App\Http\Controllers\Overlord\PermissionController::class, 'index'])->name('home');
-        Route::get('/permission/create', [App\Http\Controllers\Overlord\PermissionController::class], 'create')->name('create');
-        Route::post('/permission/create', [App\Http\Controllers\Overlord\PermissionController::class, 'store'])->name('store');
-        Route::get('/permission/edit/{role}', [App\Http\Controllers\Overlord\PermissionController::class, 'edit'])->name('edit');
-        Route::put('/permission/edit/{role}', [App\Http\Controllers\Overlord\PermissionController::class, 'update'])->name('update');
-        Route::delete('/permission/trash/{role}', [App\Http\Controllers\Overlord\PermissionController::class, 'trash'])->name('trash');
-        Route::get('/permission/{role}', [App\Http\Controllers\Overlord\PermissionController::class, 'show'])->name('show');
+    Route::name('overlord-permission-')->group(function(){
+        Route::get('/settings/permissions', [App\Http\Controllers\Overlord\PermissionController::class, 'index'])->name('home');
+        Route::get('/settings/permission/create', [App\Http\Controllers\Overlord\PermissionController::class], 'create')->name('create');
+        Route::post('/settings/permission/create', [App\Http\Controllers\Overlord\PermissionController::class, 'store'])->name('store');
+        Route::get('/settings/permission/edit/{role}', [App\Http\Controllers\Overlord\PermissionController::class, 'edit'])->name('edit');
+        Route::put('/settings/permission/edit/{role}', [App\Http\Controllers\Overlord\PermissionController::class, 'update'])->name('update');
+        Route::delete('/settings/permission/trash/{role}', [App\Http\Controllers\Overlord\PermissionController::class, 'trash'])->name('trash');
+        Route::get('/settings/permission/{role}', [App\Http\Controllers\Overlord\PermissionController::class, 'show'])->name('show');
     });
 
-    Route::prefix('overlord-role-')->group(function () {
-        Route::get('/roles', [App\Http\Controllers\Overlord\RoleController::class, 'index'])->name('home');
-        Route::get('/role/create', [App\Http\Controllers\Overlord\RoleController::class], 'create')->name('create');
-        Route::post('/role/create', [App\Http\Controllers\Overlord\RoleController::class, 'store'])->name('store');
-        Route::get('/role/edit/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'edit'])->name('edit');
-        Route::put('/role/edit/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'update'])->name('update');
-        Route::delete('/role/trash/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'trash'])->name('trash');
-        Route::get('/role/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'show'])->name('show');
+    Route::name('overlord-role-')->group(function () {
+        Route::get('/settings/roles', [App\Http\Controllers\Overlord\RoleController::class, 'index'])->name('home');
+        Route::get('/settings/role/create', [App\Http\Controllers\Overlord\RoleController::class], 'create')->name('create');
+        Route::post('/settings/role/create', [App\Http\Controllers\Overlord\RoleController::class, 'store'])->name('store');
+        Route::get('/settings/role/edit/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'edit'])->name('edit');
+        Route::put('/settings/role/edit/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'update'])->name('update');
+        Route::delete('/settings/role/trash/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'trash'])->name('trash');
+        Route::get('/settings/role/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'show'])->name('show');
     });
 });
