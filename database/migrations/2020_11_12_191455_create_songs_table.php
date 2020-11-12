@@ -18,8 +18,8 @@ class CreateSongsTable extends Migration
             $table->integer('album_id');
             $table->integer('artist_id');
             $table->string('title');
-            $table->string('length');
-            $table->date('release');
+            $table->timestamp('length')->nullable();
+            $table->date('release')->nullable();
             $table->integer('rating')->nullable();
             $table->timestamps();
         });
