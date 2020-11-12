@@ -2,9 +2,7 @@
 
 @section('main')
 
-    @auth
-        {{ var_dump(auth()->user()->roles()->name) }}   
-    @endauth
+    Laatst toegevoegde nummers
 
     <div class="flex flex-wrap">
         <div class="w-5 h-6 bg-red-100"></div>
@@ -17,4 +15,9 @@
         <div class="w-5 h-6 bg-red-800"></div>
         <div class="w-5 h-6 bg-red-900"></div>
     </div>
+
+    Laatst toegevoegde albums
+
+
+    Laatst toegevoegde artiesten
 @endsection
