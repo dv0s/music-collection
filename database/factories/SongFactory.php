@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Song;
+use App\Models\Album;
+use App\Models\Artist;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SongFactory extends Factory
@@ -22,7 +24,10 @@ class SongFactory extends Factory
     public function definition()
     {
         return [
-            //
+            "album_id" => Album::all()->random()->id,
+            "artist_id" => Artist::all()->random()->id,
+            "title" => $this->faker->name,
+            "length" => $this->faker->time('i:s','now'),
         ];
     }
 }
