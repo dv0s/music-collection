@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Overlord\PermissionController;
-use App\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,23 +24,15 @@ Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index'])-
 Route::get('/albums', [App\Http\Controllers\AlbumController::class, 'index'])->name('album-home');
 Route::get('/songs', [App\Http\Controllers\SongController::class, 'index'])->name('song-home');
 
+Route::name('song-')->prefix('song')->group(function () {
+    Route::get('/{song}', [App\Http\Controllers\SongController::class, 'show'])->name('show');
+    // Route::get('/{song}', 'SongController@show')->name('show');
+});
+
 Route::group(['middleware' => 'role:overlord'], function(){
     Route::get('/roles', [App\Http\Controllers\PermissionController::class, 'permission'])->name('permissions');
     Route::get('/upgrade-overlord', [App\Http\Controllers\PermissionController::class, 'upgrade_overlord'])->name('upgrade');
 });
-
-Route::group(['middleware' => 'role:deejay'], function(){
-    Route::get('/deejay', function(){
-        return "Only for deejays";
-    });
-});
-
-Route::group(['middleware' => 'role:manager'], function(){
-    Route::get('/manager', function(){
-        return "Only for managers";
-    });
-});
-
 
 # Overlord Section
 Route::group(['middleware' => 'role:overlord'], function(){

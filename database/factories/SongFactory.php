@@ -27,7 +27,7 @@ class SongFactory extends Factory
             "album_id" => Album::all()->random()->id,
             "artist_id" => Artist::all()->random()->id,
             "title" => $this->faker->name,
-            "length" => $this->faker->time('i:s','now'),
+            "length" => $this->faker->time('H:i:s',rand(120,300)),
         ];
     }
 }
