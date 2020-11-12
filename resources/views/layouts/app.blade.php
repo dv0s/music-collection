@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Music Collection</title>
+    <title>{{ config('app.name') ?? "Music Collection App" }}</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @stack('style')
 </head>
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-blue-300 h-32">
-        <h1 class="text-4xl text-center text-white py-6"><a href="{{ url('/') }}">Music collection</a></h1>
+        <h1 class="text-4xl text-center text-white py-6"><a href="{{ url('/') }}">{{ config('app.name') ?? "Music Collection App" }}</a></h1>
     </header>
 
     <main class="container mx-auto">
