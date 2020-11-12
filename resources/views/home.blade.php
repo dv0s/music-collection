@@ -1,16 +1,22 @@
 @extends('layouts.app')
 
 @section('main')
-    @auth
-        Welcome {{ auth()->user()->name }}    
-    @endauth
 
-    <ul>
-        <li>Show latest added songs</li>
-        <li>Show latest added albums</li>
-        <li>Show latest added artist</li>
-        <li>Show list of genres</li>
-    </ul>
+    @role('overlord')
+    <div class="flex flex-wrap">
+        <ul class="items-center pr-4">
+            <li class="font-bold text-xl">Roles</li>
+            <li><a href="{{ route('overlord-role-home') }}">Home</a></li>
+            <li><a href="{{ route('overlord-role-create') }}">Create</a></li>
+        </ul>
+
+        <ul class="items-center pl-4">
+            <li class="font-bold text-xl">Permissions</li>
+            <li><a href="{{ route('overlord-permission-home') }}">Home</a></li>
+            <li><a href="{{ route('overlord-permission-create') }}">Create</a></li>
+        </ul>
+    </div>
+    @endrole
 
     <div class="flex flex-wrap">
         <div class="w-5 h-6 bg-red-100"></div>

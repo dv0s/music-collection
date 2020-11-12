@@ -9,5 +9,5 @@
 @endpush
 
 @section('main')
-    <h1 class="text-2xl">Artists home</h1>
+    <h1 class="text-2xl">Albums home</h1>
 @endsection

@@ -9,5 +9,5 @@
 @endpush
 
 @section('main')
-    Genres Home
+    <h1 class="text-2xl">Genres Home</h1>
 @endsection

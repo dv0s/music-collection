@@ -11,12 +11,22 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-blue-300 h-32">
-        <h1 class="text-3xl text-center text-white py-auto">Music collection</h1>
-        @include('layouts.partials.head-nav')
+        <h1 class="text-4xl text-center text-white py-6"><a href="{{ url('/') }}">Music collection</a></h1>
     </header>
 
-    <main class="container mx-auto">    
-        @yield('main')
+    <main class="container mx-auto">
+        <div class="flex flex-wrap">
+            <div class="w-2/3 min-h-500 py-6">
+                <div class="flex w-full p-4 bg-white min-h-full">
+                    @yield('main')
+                </div>
+            </div>
+
+            <div class="w-1/3">
+                @include('layouts.partials.right-menu')
+            </div>
+            
+        </div>    
     </main>
 
     <footer>
