@@ -24,10 +24,12 @@ class AlbumFactory extends Factory
      */
     public function definition()
     {
+        $name = $this->faker->name;
         return [
             "artist_id" => Artist::all()->random()->id,
             "genre_id" => Genre::all()->random()->id,
-            "title" => $this->faker->name,
+            "title" => $name,
+            "slug" => Str::slug($name),
             "released_at" => $this->faker->date('Y-m-d', 'now'),
             "description" => $this->faker->realText(200)
         ];
