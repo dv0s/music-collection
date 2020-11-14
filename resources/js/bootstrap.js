@@ -34,3 +34,5 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 import 'select2';
 import 'select2/dist/css/select2.css';
+
+import 'alpinejs';
