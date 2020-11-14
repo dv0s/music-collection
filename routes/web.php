@@ -24,6 +24,7 @@ Route::get('/genres', [App\Http\Controllers\GenreController::class, 'index'])->n
 Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index'])->name('artist-home');
 Route::get('/albums', [App\Http\Controllers\AlbumController::class, 'index'])->name('album-home');
 Route::get('/songs', [App\Http\Controllers\SongController::class, 'index'])->name('song-home');
+Route::get('/songs/{search?}', [App\Http\Controllers\SongController::class], 'index')->name('song-search');
 
 Route::name('song-')->prefix('song')->group(function () {
     Route::get('/{song}', [App\Http\Controllers\SongController::class, 'show'])->name('show');

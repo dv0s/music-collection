@@ -15,7 +15,13 @@ class SongController extends Controller
      */
     public function index()
     {
-        $songs = Song::all();
+        if(!is_null(request()->get('search')))
+        {
+            $songs = Song::where('title', 'LIKE', '%'.request()->get('search').'%')->get();
+            return view('songs.index', compact('songs'));
+        }
+
+        $songs = Song::paginate(15);
         return view('songs.index', compact('songs'));
     }
 
@@ -59,7 +65,7 @@ class SongController extends Controller
      */
     public function edit(Song $song)
     {
-        $albums = Album::where('artist_id',$song->artist_id)->get();
+        $albums = Album::all();
         return view('songs.edit', compact('song', 'albums'));
     }
 
