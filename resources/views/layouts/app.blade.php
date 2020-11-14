@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            <div class="hidden md:visible lg:visible lg:w-1/3">
+            <div class="hidden md:block lg:w-1/3">
                 @include('layouts.partials.right-menu')
             </div>
             
