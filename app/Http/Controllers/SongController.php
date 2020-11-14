@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use App\Models\Album;
 use Illuminate\Http\Request;
 
 class SongController extends Controller
@@ -58,7 +59,8 @@ class SongController extends Controller
      */
     public function edit(Song $song)
     {
-        //
+        $albums = Album::where('artist_id',$song->artist_id)->get();
+        return view('songs.edit', compact('song', 'albums'));
     }
 
     /**

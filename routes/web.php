@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,12 +27,18 @@ Route::get('/songs', [App\Http\Controllers\SongController::class, 'index'])->nam
 
 Route::name('song-')->prefix('song')->group(function () {
     Route::get('/{song}', [App\Http\Controllers\SongController::class, 'show'])->name('show');
-    // Route::get('/{song}', 'SongController@show')->name('show');
 });
 
 Route::group(['middleware' => 'role:overlord'], function(){
     Route::get('/roles', [App\Http\Controllers\PermissionController::class, 'permission'])->name('permissions');
     Route::get('/upgrade-overlord', [App\Http\Controllers\PermissionController::class, 'upgrade_overlord'])->name('upgrade');
+});
+
+# Manager Selection
+Route::group(['middleware' => 'role:manager'], function(){
+    Route::prefix('song')->name('song-')->group(function(){
+        Route::get('/edit/{song}', [App\Http\Controllers\SongController::class, 'edit'])->name('edit');
+    });
 });
 
 # Overlord Section
