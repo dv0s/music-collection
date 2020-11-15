@@ -38,6 +38,7 @@ Route::group(['middleware' => 'role:overlord'], function(){
 # Manager Selection
 Route::group(['middleware' => 'role:manager'], function(){
     Route::prefix('song')->name('song-')->group(function(){
+        Route::get('/create', [App\Http\Controllers\SongController::class, 'create'])->name('create');
         Route::get('/edit/{song}', [App\Http\Controllers\SongController::class, 'edit'])->name('edit');
     });
 });
