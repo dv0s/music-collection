@@ -72,7 +72,7 @@
                 <span class="ml-3">Nummers</span>
             </a>
 
-            @role('manager')
+            @if (auth()->user()->can('manage-data'))
             <a href="#"
                class="w-full px-3 py-4 text-white flex flex-row">
                 <span class="text-lg text-gray-200">
@@ -86,7 +86,7 @@
                 </span>
                 <span class="ml-3">Manage databank</span>
             </a>
-            @endrole
+            @endif
             @role('overlord')
             <span class="flex font-medium text-sm text-blue-600 px-4 my-4 uppercase">Overlord menu</span>
 
@@ -103,7 +103,7 @@
                 <span class="ml-3">Manage toestemmingen</span>
             </a>
         
-            <a href="{{ route('overlord-permission-home') }}"
+            <a href="{{ route('overlord-role-home') }}"
                class="w-full px-3 py-4 text-white flex flex-row">
                 <span class="text-lg text-gray-200">
                     <svg class="w-6 h-6" 
