@@ -12,10 +12,11 @@ trait HasPermissions
     {
 
         $permissions = $this->getAllPermissions($permissions);
-        dd($permissions);
+
         if ($permissions === null) {
             return $this;
         }
+        
         $this->permissions()->saveMany($permissions);
         return $this;
     }
