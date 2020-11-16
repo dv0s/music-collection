@@ -5,7 +5,17 @@
 @endpush
 
 @push('script')
-    {{--content--}}
+    <script type="text/javascript">
+        function do_delete(form, name)
+        {
+            if(confirm("Do you really want to delete " +name+ "?")){
+                document.getElementById(form).submit();
+            }
+
+            return false;
+        }
+
+    </script>
 @endpush
 
 @section('main')
@@ -37,19 +47,28 @@
                 <tr>
                     <td class="text-left py-3 px-4">
                         <div class="flex flex-col flex-wrap">
-                            <a class="hover:text-blue-500 text-lg" href="{{-- route('user-show',$user->id) --}}">{{ $user->name }}</a>
+                            <a class="hover:text-blue-500 text-lg" href="{{ route('overlord-users-show',$user->id) }}">{{ $user->name }}</a>
                             <span class="text-xs italic hidden sm:block md:hidden">- {{ $user->email }}</span>
                         </div>
                     </td>
                     <td class="text-left py-3 px-4 hidden md:block">{{ $user->email }}</td>
-                    <td class="text-left py-3 px-4">
+                    <td class="text-left py-3 px-4 flex sm:flex-col lg:flex-row">
                         @foreach ($user->roles as $role)
                             <span class="text-xs bg-green-500 py-2 px-1 mx-1 text-white">{{ $role->name }}</span>
                         @endforeach    
                     </td>
                     <td class="text-left py-3 px-4 hidden md:block">
                         <div class="flex flex-row">
-                            <a href="{{ route('overlord-users-edit', [$user->id]) }}" class="text-sm text-yellow-600 hover:text-yellow-700 hover:underline">edit</a>
+                            <a href="{{ route('overlord-users-edit', [$user->id]) }}" class="text-sm text-yellow-600 hover:text-yellow-700 hover:underline px-2 mt-0">edit</a>
+                            <form action="{{ route('overlord-users-destroy') }}" 
+                                    method="POST" 
+                                    onsubmit="do_delete('delete_{{ $user->id }}', '{{ $user->name }}'); return false" 
+                                    id="delete_{{ $user->id }}">
+                                @csrf
+                                @method("DELETE")
+                                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                <button type="submit" class="text-sm text-red-600 hover:text-red-700 hover:underline px-2 mt-0">delete</button>
+                            </form>
                         </div>
                     </td>
                 </tr>                    

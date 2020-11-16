@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Overlord;
 
-use Exception;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserController extends Controller
 {
+    use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *
@@ -53,6 +55,11 @@ class UserController extends Controller
 
         $user->roles()->attach($request->roles);
 
+        foreach($request->roles as $role)
+        {
+            $user->permissions()->attach($role->permissions());
+        }
+
         return redirect()->route('overlord-users-home');
     }
 
@@ -62,9 +69,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -94,6 +101,10 @@ class UserController extends Controller
 
         $user->save();
 
+        foreach ($request->roles as $role) {
+            $user->permissions()->sync(Role::find($role)->permissions);
+        }
+
         return redirect()->route('overlord-users-home');
 
 
@@ -105,8 +116,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        User::findOrFail($request->user_id)->delete();
+        return redirect()->route('overlord-users-home');
     }
 }

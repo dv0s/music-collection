@@ -71,7 +71,7 @@ Route::name('overlord-')->middleware('role:overlord')->group(function(){
         Route::post('/settings/user/create', [App\Http\Controllers\Overlord\UserController::class, 'store'])->name('store');
         Route::get('/settings/user/edit/{user}', [App\Http\Controllers\Overlord\UserController::class, 'edit'])->name('edit');
         Route::put('/settings/user/edit/{user}', [App\Http\Controllers\Overlord\UserController::class, 'update'])->name('update');
-        Route::delete('/settings/user/delete/{user}', [App\Http\COntrollers\Overlord\UserController::class, 'destroy'])->name('destroy');
+        Route::delete('/settings/user/delete', [App\Http\COntrollers\Overlord\UserController::class, 'destroy'])->name('destroy');
 
         Route::get('/settings/user/{user}', [App\Http\Controllers\Overlord\UserController::class, 'show'])->name('show');
     });
