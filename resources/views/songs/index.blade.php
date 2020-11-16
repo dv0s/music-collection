@@ -36,9 +36,9 @@
     <div class="py-8 w-full">
         @role('manager')
         <div class="flex flew-row flex-wrap">
-            @can('create-song')
+            @if(auth()->user()->hasPermissionTo('create-albums'))
             <a href="{{ route('song-create') }}">Nummer aanmaken</a>
-            @endcan
+            @endif
         </div>
         @endrole
         @empty(request()->get('search'))
@@ -51,9 +51,9 @@
                 <thead class="bg-gray-800 text-white">
                     <tr>
                         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Title</th>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm hidden md:visible">Album</th>
+                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm hidden md:block">Album</th>
                         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Length</th>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm hidden md:visible">Rating</th>
+                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm hidden md:block">Rating</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-700">
@@ -62,12 +62,12 @@
                         <td class="text-left py-3 px-4">
                             <div class="flex flex-col flex-wrap">
                                 <a class="hover:text-blue-500 text-lg" href="{{ route('song-show', $song->id) }}">{{ $song->title }}</a>
-                                <span class="text-xs italic hidden md:visible">- by <a class="hover:text-blue-500" href="#">{{ $song->album->artist->name }}</a></span>
+                                <span class="text-xs italic hidden md:block">- by <a class="hover:text-blue-500" href="#">{{ $song->album->artist->name }}</a></span>
                             </div>
                         </td>
-                        <td class="text-left py-3 px-4 hidden md:visible"><a class="hover:text-blue-500" href="#">{{ $song->album->title }}</a></td>
+                        <td class="text-left py-3 px-4 hidden md:block"><a class="hover:text-blue-500" href="#">{{ $song->album->title }}</a></td>
                         <td class="text-left py-3 px-4">{{ $song->length }}</td>
-                        <td class="text-left py-3 px-4 hidden md:visible">
+                        <td class="text-left py-3 px-4 hidden md:block">
                             <div class="flex flex-row">
                             @for ($i = 0; $i < $song->rating; $i++)
                                 <span class="text-yellow-600">

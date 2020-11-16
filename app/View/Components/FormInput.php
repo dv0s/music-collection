@@ -7,26 +7,24 @@ use Illuminate\View\Component;
 class FormInput extends Component
 {
 
-    public $type;
-    public $name;
+    public string $type;
+    public string $name;
+    public string $id;
+    public string $label;
     public $value;
-    public $id;
-    public $label;
-    public $helper;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $type, string $name, string $id, string $label, string $value, string $helper)
+    public function __construct(string $type, string $name, string $id, string $label, $value)
     {
         $this->type = $type;
         $this->name = $name;
+        $this->id = $id;
         $this->label = $label;
-        $this->value = $value ?? null;
-        $this->id = $id ?? null;
-        $this->helper = $helper ?? null;
+        $this->value = $value;
     }
 
     /**

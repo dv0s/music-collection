@@ -44,8 +44,8 @@ Route::group(['middleware' => 'role:manager'], function(){
 });
 
 # Overlord Section
-Route::group(['middleware' => 'role:overlord'], function(){
-    Route::name('overlord-permission-')->group(function(){
+Route::name('overlord-')->middleware('role:overlord')->group(function(){
+    Route::name('permission-')->group(function(){
         Route::get('/settings/permissions', [App\Http\Controllers\Overlord\PermissionController::class, 'index'])->name('home');
         Route::get('/settings/permission/create', [App\Http\Controllers\Overlord\PermissionController::class], 'create')->name('create');
         Route::post('/settings/permission/create', [App\Http\Controllers\Overlord\PermissionController::class, 'store'])->name('store');
@@ -55,7 +55,7 @@ Route::group(['middleware' => 'role:overlord'], function(){
         Route::get('/settings/permission/{role}', [App\Http\Controllers\Overlord\PermissionController::class, 'show'])->name('show');
     });
 
-    Route::name('overlord-role-')->group(function () {
+    Route::name('role-')->group(function () {
         Route::get('/settings/roles', [App\Http\Controllers\Overlord\RoleController::class, 'index'])->name('home');
         Route::get('/settings/role/create', [App\Http\Controllers\Overlord\RoleController::class], 'create')->name('create');
         Route::post('/settings/role/create', [App\Http\Controllers\Overlord\RoleController::class, 'store'])->name('store');
@@ -63,5 +63,11 @@ Route::group(['middleware' => 'role:overlord'], function(){
         Route::put('/settings/role/edit/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'update'])->name('update');
         Route::delete('/settings/role/trash/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'trash'])->name('trash');
         Route::get('/settings/role/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'show'])->name('show');
+    });
+
+    Route::name('users-')->group(function(){
+        Route::get('/settings/users/', [App\Http\Controllers\Overlord\UserController::class, 'index'])->name('home');
+        Route::get('/settings/user/edit/{user}', [App\Http\Controllers\Overlord\UserController::class, 'edit'])->name('edit');
+        Route::put('/settings/user/edit/{user}', [App\Http\Controllers\Overlord\UserController::class, 'update'])->name('update');
     });
 });
