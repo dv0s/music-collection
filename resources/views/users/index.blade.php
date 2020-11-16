@@ -51,11 +51,17 @@
                             <span class="text-xs italic hidden sm:block md:hidden">- {{ $user->email }}</span>
                         </div>
                     </td>
-                    <td class="text-left py-3 px-4 hidden md:block">{{ $user->email }}</td>
-                    <td class="text-left py-3 px-4 flex sm:flex-col lg:flex-row">
+                    <td class="text-left py-3 px-4 hidden md:block">
+                        <div class="flex flex-col flex-wrap">
+                            <span>{{ $user->email }}</span>
+                        </div>
+                    </td>
+                    <td class="text-left py-3 px-4">
+                        <div class="inline-flex flex-row sm:flex-col">
                         @foreach ($user->roles as $role)
-                            <span class="text-xs bg-green-500 py-2 px-1 mx-1 text-white">{{ $role->name }}</span>
-                        @endforeach    
+                            <span class="text-xs bg-green-500 py-1 px-1 mx-1 text-white">{{ $role->name }}</span>
+                        @endforeach
+                        </div>
                     </td>
                     <td class="text-left py-3 px-4 hidden md:block">
                         <div class="flex flex-row">
