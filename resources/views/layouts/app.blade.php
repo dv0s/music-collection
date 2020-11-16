@@ -10,14 +10,14 @@
     @stack('style')
 </head>
 <body class="bg-gray-100 text-gray-800">
-    <header class="bg-blue-300 h-32">
-        <h1 class="text-4xl text-center text-white py-6"><a href="{{ url('/') }}">{{ config('app.name') ?? "Music Collection App" }}</a></h1>
+    <header class="bg-blue-300 min-h-24 lg:min-h-32">
+        <h1 class="text-4xl text-center text-white pt-6 lg:py-6"><a href="{{ url('/') }}">{{ config('app.name') ?? "Music Collection App" }}</a></h1>
         @include('layouts.partials.head-nav')
     </header>
 
-    <main class="container mx-auto">
-        <div class="flex flex-wrap">
-            <div class="sm:w-full lg:w-2/3 min-h-500 py-6">
+    <main class="container mx-auto w-full">
+        <div class="flex flex-wrap w-full">
+            <div class="w-full lg:w-2/3 min-h-500 py-6">
                 <div class="flex w-full p-4 bg-white min-h-full">
                     @yield('main')
                 </div>
