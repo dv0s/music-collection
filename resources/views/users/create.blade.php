@@ -12,16 +12,15 @@
 
 @section('main')
 <div class="w-full flex flex-col flex-wrap">
-    <h1 class="text-2xl mb-6">{{ $user->name }} aanpassen</h1>
+    <h1 class="text-2xl mb-6">Gebruiker toevogen</h1>
 
-    <form method="POST" action="{{ route('overlord-users-update', [$user->id]) }}" class="w-full flex flex-row flex-wrap">
+    <form method="POST" action="{{ route('overlord-users-store') }}" class="w-full flex flex-row flex-wrap">
         @csrf
-        @method('PUT')
 
         <div class="flex flex-col flex-wrap w-1/2">
             <div class="flex flex-col flex-wrap w-full">
-                <x-form-input type="text" name="name" id="name" label="naam" :value="old('name') ?? $user->name" required="true" />
-                <x-form-input name="email" type="email" label="e-mailadres" :value="old('email') ?? $user->email" id="email" required="true" />
+                <x-form-input type="text" name="name" id="name" label="naam" :value="old('name')" required="true" />
+                <x-form-input name="email" type="email" label="e-mailadres" :value="old('email')" id="email" required="true" />
             </div>
         </div>
 
@@ -32,7 +31,7 @@
                 </label>
                 <select name="roles[]" id="roles" multiple="multiple" class="select2 w-full">
                     @foreach ($roles as $role)
-                        <option value="{{ $role->id }}" {!! !$user->hasRole($role->slug) ?: 'selected' !!}>{{ $role->name }}</option>
+                        <option value="{{ $role->id }}">{{ $role->name }}</option>
                     @endforeach
                 </select>
             </div>

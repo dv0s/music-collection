@@ -11,7 +11,7 @@
 @section('main')
 <div class="py-8 w-full">
     <div class="w-full flex flew-row flex-wrap mb-6">
-        <a href="route('user-create')" class="text-green-500 flex flex-row">
+        <a href="{{ route('overlord-users-create') }}" class="text-green-500 flex flex-row">
             <svg class="w-6 h-6" 
                     fill="none" 
                     stroke="currentColor" 

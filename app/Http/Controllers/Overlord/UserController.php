@@ -28,7 +28,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        throw new Exception('NOT IMPLEMENTED YET!');
+        $roles = Role::all();
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -39,7 +40,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        throw new Exception('NOT IMPLETENTED YET!');
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email'
+        ]);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt('secrettt');
+        $user->save();
+
+        $user->roles()->attach($request->roles);
+
+        return redirect()->route('overlord-users-home');
     }
 
     /**
