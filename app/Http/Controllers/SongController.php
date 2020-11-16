@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use App\Models\Album;
 use Illuminate\Http\Request;
 
 class SongController extends Controller
@@ -14,7 +15,14 @@ class SongController extends Controller
      */
     public function index()
     {
-        return view('songs.index');
+        if(!is_null(request()->get('search')))
+        {
+            $songs = Song::where('title', 'LIKE', '%'.request()->get('search').'%')->get();
+            return view('songs.index', compact('songs'));
+        }
+
+        $songs = Song::paginate(15);
+        return view('songs.index', compact('songs'));
     }
 
     /**
@@ -46,7 +54,7 @@ class SongController extends Controller
      */
     public function show(Song $song)
     {
-        //
+        return view('songs.show', compact('song'));
     }
 
     /**
@@ -57,7 +65,8 @@ class SongController extends Controller
      */
     public function edit(Song $song)
     {
-        //
+        $albums = Album::all();
+        return view('songs.edit', compact('song', 'albums'));
     }
 
     /**

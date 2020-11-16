@@ -138,7 +138,7 @@
                 </a>
             </li>
             <li class="my-px">
-                <a href="#"
+                <a href="{{ route('overlord-users-home') }}"
                     class="flex flex-row items-center h-12 px-4 rounded-lg text-gray-600 hover:bg-gray-100">
                     <span class="flex items-center justify-center text-lg text-gray-400">
                         <svg class="w-6 h-6" 
