@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers\Overlord;
 
-use App\Http\Controllers\Controller;
+use App\Models\role;
+use App\Models\Permission;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:overlord');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+        return view('roles.index', compact('roles'));
     }
 
     /**
@@ -24,7 +34,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = Permission::all();
+        return view('roles.create', compact('permissions'));
     }
 
     /**
@@ -35,7 +46,18 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $role = new Role();
+        $role->name = $request->name;
+        $role->slug = Str::slug($request->name);
+        $role->save();
+
+        $role->permissions()->attach($request->permissions);
+
+        return redirect()->route('overlord-role-home');
     }
 
     /**
@@ -44,9 +66,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Role $role)
     {
-        //
+        return view('roles.show', compact('role'));
     }
 
     /**
@@ -55,9 +77,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        $permissions = Permission::all();
+        return view('roles.edit', compact('role', 'permissions'));
     }
 
     /**
@@ -67,9 +90,19 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $role->name = $request->name;
+        $role->slug = Str::slug($request->name);
+        $role->save();
+
+        $role->permissions()->sync($request->permissions);
+
+        return redirect()->route('overlord-role-home');
     }
 
     /**
@@ -78,8 +111,9 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Role::findOrFail($request->role_id)->delete();
+        return redirect()->route('overlord-role-home');
     }
 }
