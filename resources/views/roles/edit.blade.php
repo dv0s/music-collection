@@ -12,26 +12,26 @@
 
 @section('main')
 <div class="w-full flex flex-col flex-wrap">
-    <h1 class="text-2xl mb-6">Toestemming aanpassen</h1>
+    <h1 class="text-2xl mb-6">Rol aanpassen</h1>
 
-    <form method="POST" action="{{ route('overlord-permission-update', [$permission->id]) }}" class="w-full flex flex-row flex-wrap">
+    <form method="POST" action="{{ route('overlord-role-update', [$role->id]) }}" class="w-full flex flex-row flex-wrap">
         @csrf
         @method('PUT')
 
         <div class="flex flex-col flex-wrap w-1/2">
             <div class="flex flex-col flex-wrap w-full">
-                <x-form-input type="text" name="name" id="name" label="naam" :value="old('name') ?? $permission->name" required="true" />
+                <x-form-input type="text" name="name" id="name" label="naam" :value="old('name') ?? $role->name" required="true" />
             </div>
         </div>
 
         <div class="flex flex-col flex-wrap w-1/2">
             <div class="w-full px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="roles">
-                    Rollen
+                    Toestemmingen
                 </label>
-                <select name="roles[]" id="roles" multiple="multiple" class="select2 w-full">
-                    @foreach ($roles as $role)
-                        <option value="{{ $role->id }}" {!! $permission->roles()->where('role_id', $role->id)->exists() ? 'selected' : '' ; !!}>{{ $role->name }}</option>
+                <select name="permissions[]" id="permissions" multiple="multiple" class="select2 w-full">
+                    @foreach ($permissions as $permission)
+                        <option value="{{ $permission->id }}" {!! $role->permissions()->where('permission_id', $permission->id)->exists() ? 'selected' : '' ; !!}>{{ $permission->name }}</option>
                     @endforeach
                 </select>
             </div>

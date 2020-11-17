@@ -58,7 +58,7 @@ Route::name('overlord-')->middleware('role:overlord')->group(function(){
 
     Route::name('role-')->group(function () {
         Route::get('/settings/roles', [App\Http\Controllers\Overlord\RoleController::class, 'index'])->name('home');
-        Route::get('/settings/role/create', [App\Http\Controllers\Overlord\RoleController::class], 'create')->name('create');
+        Route::get('/settings/role/create', [App\Http\Controllers\Overlord\RoleController::class, 'create'])->name('create');
         Route::post('/settings/role/create', [App\Http\Controllers\Overlord\RoleController::class, 'store'])->name('store');
         Route::get('/settings/role/edit/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'edit'])->name('edit');
         Route::put('/settings/role/edit/{role}', [App\Http\Controllers\Overlord\RoleController::class, 'update'])->name('update');
