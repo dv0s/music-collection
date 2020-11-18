@@ -1,6 +1,5 @@
 <?php
 
-use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,32 +19,51 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::get('/init', [App\Http\Controllers\PermissionController::class, 'init'])->name('init');
 
-Route::get('/genres', [App\Http\Controllers\GenreController::class, 'index'])->name('genre-home');
-Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index'])->name('artist-home');
-Route::get('/albums', [App\Http\Controllers\AlbumController::class, 'index'])->name('album-home');
-Route::get('/songs', [App\Http\Controllers\SongController::class, 'index'])->name('song-home');
-Route::get('/songs/{search?}', [App\Http\Controllers\SongController::class], 'index')->name('song-search');
-
-Route::name('song-')->prefix('song')->group(function () {
-    Route::get('/{song}', [App\Http\Controllers\SongController::class, 'show'])->name('show');
-});
-
 Route::group(['middleware' => 'role:overlord'], function(){
     Route::get('/roles', [App\Http\Controllers\PermissionController::class, 'permission'])->name('permissions');
     Route::get('/upgrade-overlord', [App\Http\Controllers\PermissionController::class, 'upgrade_overlord'])->name('upgrade');
 });
 
-# Manager Selection
+# GENRES
+Route::get('/genres', [App\Http\Controllers\GenreController::class, 'index'])->name('genre-home');
+Route::get('/genres/{search?}', [App\Http\Controllers\GenreController::class, 'index'])->name('genre-search');
 Route::prefix('genre')->name('genre-')->group(function(){
     Route::get('/create', [App\Http\Controllers\GenreController::class, 'create'])->name('create');
     Route::post('/create', [App\Http\Controllers\GenreController::class, 'store'])->name('store');
     Route::get('/edit/{genre}', [App\Http\Controllers\GenreController::class, 'edit'])->name('edit');
     Route::put('/edit/{genre}', [App\Http\Controllers\GenreController::class, 'update'])->name('update');
+    Route::delete('/destory', [App\Http\Controllers\GenreController::class, 'destroy'])->name('destroy');
 });
 
+# ARTISTS
+Route::get('/artists', [App\Http\Controllers\ArtistController::class, 'index'])->name('artist-home');
+Route::get('/artists/{search?}', [App\Http\Controllers\ArtistController::class, 'index'])->name('artist-search');
+Route::prefix('artist')->name('artist-')->group(function(){
+    Route::get('/create', [App\Http\Controllers\ArtistController::class, 'create'])->name('create');
+    Route::post('/create', [App\Http\Controllers\ArtistController::class, 'store'])->name('store');
+    Route::get('/edit/{artist}', [App\Http\Controllers\ArtistController::class, 'edit'])->name('edit');
+    Route::put('/edit/{artist}', [App\Http\Controllers\ArtistController::class, 'update'])->name('update');
+    Route::delete('/destory', [App\Http\Controllers\ArtistController::class, 'destroy'])->name('destroy');
+});
+
+# ALBUMS
+Route::get('/albums', [App\Http\Controllers\AlbumController::class, 'index'])->name('album-home');
+Route::get('/albums/{search?}', [App\Http\Controllers\AlbumController::class, 'index'])->name('artist-search');
+Route::prefix('artist')->name('artist-')->group(function () {
+    Route::get('/create', [App\Http\Controllers\AlbumController::class, 'create'])->name('create');
+    Route::post('/create', [App\Http\Controllers\AlbumController::class, 'store'])->name('store');
+    Route::get('/edit/{album}', [App\Http\Controllers\AlbumController::class, 'edit'])->name('edit');
+    Route::put('/edit/{album}', [App\Http\Controllers\AlbumController::class, 'update'])->name('update');
+    Route::delete('/destory', [App\Http\Controllers\AlbumController::class, 'destroy'])->name('destroy');
+});
+
+# SONGS
+Route::get('/songs', [App\Http\Controllers\SongController::class, 'index'])->name('song-home');
+Route::get('/songs/{search?}', [App\Http\Controllers\SongController::class], 'index')->name('song-search');
 Route::prefix('song')->name('song-')->group(function(){
     Route::get('/create', [App\Http\Controllers\SongController::class, 'create'])->name('create');
     Route::get('/edit/{song}', [App\Http\Controllers\SongController::class, 'edit'])->name('edit');
+    Route::get('/{song}', [App\Http\Controllers\SongController::class, 'show'])->name('show');
 });
 
 # Overlord Section
