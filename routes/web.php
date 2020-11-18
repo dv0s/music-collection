@@ -54,7 +54,7 @@ Route::prefix('artist')->name('artist-')->group(function () {
     Route::post('/create', [App\Http\Controllers\AlbumController::class, 'store'])->name('store');
     Route::get('/edit/{album}', [App\Http\Controllers\AlbumController::class, 'edit'])->name('edit');
     Route::put('/edit/{album}', [App\Http\Controllers\AlbumController::class, 'update'])->name('update');
-    Route::delete('/destory', [App\Http\Controllers\AlbumController::class, 'destroy'])->name('destroy');
+    Route::delete('/destroy', [App\Http\Controllers\AlbumController::class, 'destroy'])->name('destroy');
 });
 
 # SONGS
