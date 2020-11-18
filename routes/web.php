@@ -33,6 +33,7 @@ Route::prefix('genre')->name('genre-')->group(function(){
     Route::get('/edit/{genre}', [App\Http\Controllers\GenreController::class, 'edit'])->name('edit');
     Route::put('/edit/{genre}', [App\Http\Controllers\GenreController::class, 'update'])->name('update');
     Route::delete('/destory', [App\Http\Controllers\GenreController::class, 'destroy'])->name('destroy');
+    Route::get('/genre/{genre}', [App\Http\COntrollers\GenreController::class, 'show'])->name('show');
 });
 
 # ARTISTS
@@ -44,17 +45,19 @@ Route::prefix('artist')->name('artist-')->group(function(){
     Route::get('/edit/{artist}', [App\Http\Controllers\ArtistController::class, 'edit'])->name('edit');
     Route::put('/edit/{artist}', [App\Http\Controllers\ArtistController::class, 'update'])->name('update');
     Route::delete('/destory', [App\Http\Controllers\ArtistController::class, 'destroy'])->name('destroy');
+    Route::get('/{artist}', [App\Http\Controllers\ArtistController::class, 'show'])->name('show');
 });
 
 # ALBUMS
 Route::get('/albums', [App\Http\Controllers\AlbumController::class, 'index'])->name('album-home');
 Route::get('/albums/{search?}', [App\Http\Controllers\AlbumController::class, 'index'])->name('artist-search');
-Route::prefix('artist')->name('artist-')->group(function () {
+Route::prefix('album')->name('album-')->group(function () {
     Route::get('/create', [App\Http\Controllers\AlbumController::class, 'create'])->name('create');
     Route::post('/create', [App\Http\Controllers\AlbumController::class, 'store'])->name('store');
     Route::get('/edit/{album}', [App\Http\Controllers\AlbumController::class, 'edit'])->name('edit');
     Route::put('/edit/{album}', [App\Http\Controllers\AlbumController::class, 'update'])->name('update');
     Route::delete('/destroy', [App\Http\Controllers\AlbumController::class, 'destroy'])->name('destroy');
+    Route::get('/{album}', [App\Http\Controllers\AlbumController::class, 'show'])->name('show');
 });
 
 # SONGS
@@ -62,7 +65,9 @@ Route::get('/songs', [App\Http\Controllers\SongController::class, 'index'])->nam
 Route::get('/songs/{search?}', [App\Http\Controllers\SongController::class], 'index')->name('song-search');
 Route::prefix('song')->name('song-')->group(function(){
     Route::get('/create', [App\Http\Controllers\SongController::class, 'create'])->name('create');
+    Route::post('/create', [App\Http\Controllers\SongController::class, 'store'])->name('store');
     Route::get('/edit/{song}', [App\Http\Controllers\SongController::class, 'edit'])->name('edit');
+    Route::put('/edit/{song}', [App\Http\Controllers\SongController::class, 'update'])->name('update');
     Route::get('/{song}', [App\Http\Controllers\SongController::class, 'show'])->name('show');
 });
 
