@@ -14,7 +14,8 @@ class GenreController extends Controller
      */
     public function index()
     {
-        return view('genres.index');
+        $genres = Genre::paginate(15);
+        return view('genres.index', compact('genres'));
     }
 
     /**
@@ -57,7 +58,11 @@ class GenreController extends Controller
      */
     public function edit(Genre $genre)
     {
-        //
+        if(request()->user()->canNot('edit-genre')){
+            return abort('403');
+        }
+
+        return view('genres.edit', compact('genre'));
     }
 
     /**

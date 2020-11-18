@@ -36,11 +36,16 @@ Route::group(['middleware' => 'role:overlord'], function(){
 });
 
 # Manager Selection
-Route::group(['middleware' => 'role:manager'], function(){
-    Route::prefix('song')->name('song-')->group(function(){
-        Route::get('/create', [App\Http\Controllers\SongController::class, 'create'])->name('create');
-        Route::get('/edit/{song}', [App\Http\Controllers\SongController::class, 'edit'])->name('edit');
-    });
+Route::prefix('genre')->name('genre-')->group(function(){
+    Route::get('/create', [App\Http\Controllers\GenreController::class, 'create'])->name('create');
+    Route::post('/create', [App\Http\Controllers\GenreController::class, 'store'])->name('store');
+    Route::get('/edit/{genre}', [App\Http\Controllers\GenreController::class, 'edit'])->name('edit');
+    Route::put('/edit/{genre}', [App\Http\Controllers\GenreController::class, 'update'])->name('update');
+});
+
+Route::prefix('song')->name('song-')->group(function(){
+    Route::get('/create', [App\Http\Controllers\SongController::class, 'create'])->name('create');
+    Route::get('/edit/{song}', [App\Http\Controllers\SongController::class, 'edit'])->name('edit');
 });
 
 # Overlord Section
