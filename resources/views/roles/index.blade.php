@@ -37,8 +37,7 @@
             <thead class="bg-gray-800 text-white">
                 <tr>
                     <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Naam</th>
-                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Toestemmingen</th>
-                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm hidden md:block"></th>
+                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm"></th>
                 </tr>
             </thead>
             <tbody class="text-gray-700">
@@ -51,13 +50,6 @@
                         </div>
                     </td>
                     <td class="text-left py-3 px-4">
-                        <div class="inline-flex flex-row sm:flex-col">
-                        @foreach ($role->permissions as $permission)
-                            <span class="text-xs bg-green-500 py-1 px-1 mx-1 text-white">{{ $permission->name }}</span>
-                        @endforeach
-                        </div>
-                    </td>
-                    <td class="text-left py-3 px-4 hidden md:block">
                         <div class="flex flex-row">
                             <a href="{{ route('overlord-role-edit', [$role->id]) }}" class="text-sm text-yellow-600 hover:text-yellow-700 hover:underline px-2 mt-0">edit</a>
                             <form action="{{ route('overlord-role-destroy') }}" 

@@ -29,6 +29,13 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="roles">
                     Rollen
                 </label>
+
+                {{-- Option for checkboxes --}}
+                {{-- @foreach ($roles as $role)
+                <x-form-checkbox name="roles[]" :label="$role->name" :id="$role->slug" :value="$role->id" :is-checked="$permission->roles()->where('role_id', $role->id)->exists()"/>
+                @endforeach --}}
+
+
                 <select name="roles[]" id="roles" multiple="multiple" class="select2 w-full">
                     @foreach ($roles as $role)
                         <option value="{{ $role->id }}" {!! $permission->roles()->where('role_id', $role->id)->exists() ? 'selected' : '' ; !!}>{{ $role->name }}</option>

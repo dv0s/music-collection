@@ -29,11 +29,9 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="roles">
                     Toestemmingen
                 </label>
-                <select name="permissions[]" id="permissions" multiple="multiple" class="select2 w-full">
-                    @foreach ($permissions as $permission)
-                        <option value="{{ $permission->id }}" {!! $role->permissions()->where('permission_id', $permission->id)->exists() ? 'selected' : '' ; !!}>{{ $permission->name }}</option>
-                    @endforeach
-                </select>
+                @foreach ($permissions as $permission)
+                <x-form-checkbox name="permissions[]" :label="$permission->name" :id="$permission->slug" :value="$permission->id" :is-checked="$role->permissions()->where('permission_id', $permission->id)->exists()"/>
+                @endforeach
             </div>
         </div>
         <button type="submit" class="px-4 py-2 ml-3 mt-4 bg-blue-500 text-xs text-white uppercase bold">
