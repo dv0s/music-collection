@@ -42,8 +42,16 @@ class PermissionsServiceProvider extends ServiceProvider
             return "<?php if(auth()->check() && auth()->user()->hasRole({$role})) : ?>"; //return this if statement inside php tag
         });
 
-        Blade::directive('endrole', function ($role) {
+        Blade::directive('endrole', function () {
             return "<?php endif; ?>"; //return this endif statement inside php tag
+        });
+
+        Blade::directive('permission', function($permission) {
+            return "<?php if(auth()->check() && (auth()->user()->can({$permission}) || auth()->user()->hasRole('".config('app.superuser_role')."')) ) : ?>";
+        });
+
+        Blade::directive('endpermission', function () {
+            return "<?php endif; ?>";
         });
     }
 }
