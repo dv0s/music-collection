@@ -36,9 +36,9 @@
     <div class="py-8 w-full">
         @role('manager')
         <div class="flex flew-row flex-wrap">
-            @if(auth()->user()->hasPermissionTo('create-albums'))
+            @permission('create-song')
             <a href="{{ route('song-create') }}">Nummer aanmaken</a>
-            @endif
+            @endpermission
         </div>
         @endrole
         @empty(request()->get('search'))
