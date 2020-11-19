@@ -36,7 +36,7 @@ class GenreController extends Controller
      */
     public function create()
     {
-        if (!request()->user()->can('create-song') && !request()->user()->hasRole('overlord'))
+        if (!request()->user()->can('create-genre') && !request()->user()->hasRole(config('app.superuser_role')))
         {
             return abort(403);
         }
@@ -52,7 +52,7 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        if (!request()->user()->can('create-song') && !request()->user()->hasRole('overlord')) {
+        if (!request()->user()->can('create-genre') && !request()->user()->hasRole(config('app.superuser_role'))) {
             return abort(403);
         }
 
@@ -87,7 +87,7 @@ class GenreController extends Controller
      */
     public function edit(Genre $genre)
     {
-        if (!request()->user()->can('edit-genre') && !request()->user()->hasRole('overlord')) {
+        if (!request()->user()->can('edit-genre') && !request()->user()->hasRole(config('app.superuser_role'))) {
             return abort(403);
         }
 
@@ -103,7 +103,7 @@ class GenreController extends Controller
      */
     public function update(Request $request, Genre $genre)
     {
-        if (!request()->user()->can('edit-genre') && !request()->user()->hasRole('overlord')) {
+        if (!request()->user()->can('edit-genre') && !request()->user()->hasRole(config('app.superuser_role'))) {
             return abort(403);
         }
 
@@ -126,7 +126,7 @@ class GenreController extends Controller
      */
     public function destroy(Request $request)
     {
-        if (!request()->user()->can('delete-genre') && !request()->user()->hasRole('overlord')) {
+        if (!request()->user()->can('delete-genre') && !request()->user()->hasRole(config('app.superuser_role'))) {
             return abort(403);
         }
 
