@@ -45,7 +45,7 @@
 
     <div class="py-8 w-full">
         @permission('create-genre')
-        <a href="{{ route('genre-create') }}" class="flex flew-row flex-wrap text-green-500">
+        <a href="{{ route('genre-create') }}" class="flex flew-row flex-wrap text-green-500 mb-2">
             <svg class="w-6 h-6" 
                     fill="none" 
                     stroke="currentColor" 
