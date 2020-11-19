@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\Genre;
+use App\Models\Artist;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,13 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        return view('albums.index');
+        if (!is_null(request()->get('search'))) {
+            $albums = Album::where('title', 'LIKE', '%' . request()->get('search') . '%')->get();
+            return view('albums.index', compact('albums'));
+        }
+
+        $albums = Album::paginate(15);
+        return view('albums.index', compact('albums'));
     }
 
     /**
@@ -24,7 +38,14 @@ class AlbumController extends Controller
      */
     public function create()
     {
-        //
+        if (!request()->user()->can('create-album') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $artists = Artist::all();
+        $genres = Genre::all();
+
+        return view('albums.create', compact('artists', 'genres'));
     }
 
     /**
@@ -35,7 +56,26 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!request()->user()->can('create-album') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $request->validate([
+            'title' => 'required',
+            'released_at' => 'required|date'
+        ]);
+
+        $album = new Album();
+        $album->artist_id = $request->artist_id;
+        $album->genre_id = $request->genre_id;
+        $album->title = Str::title($request->title);
+        $album->slug = Str::slug($request->title);
+        $album->released_at = $request->released_at;
+        $album->description = $request->description;
+
+        $album->save();
+
+        return redirect()->route('album-home')->with('success', "Album is aangemaakt");
     }
 
     /**
@@ -45,8 +85,8 @@ class AlbumController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Album $album)
-    {
-        //
+    {   
+        return view('albums.show', compact('album'));
     }
 
     /**
@@ -57,7 +97,14 @@ class AlbumController extends Controller
      */
     public function edit(Album $album)
     {
-        //
+        if (!request()->user()->can('edit-album') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $artists = Artist::all();
+        $genres = Genre::all();
+
+        return view('albums.edit', compact('album', 'artists', 'genres'));
     }
 
     /**
@@ -69,7 +116,25 @@ class AlbumController extends Controller
      */
     public function update(Request $request, Album $album)
     {
-        //
+        if (!request()->user()->can('edit-album') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $request->validate([
+            'title' => 'required',
+            'released_at' => 'required|date'
+        ]);
+
+        $album->artist_id = $request->artist_id;
+        $album->genre_id = $request->genre_id;
+        $album->title = Str::title($request->title);
+        $album->slug = Str::slug($request->title);
+        $album->released_at = $request->released_at;
+        $album->description = $request->description;
+
+        $album->save();
+
+        return redirect()->route('album-home')->with('success', "Het album is aangepast!");
     }
 
     /**
@@ -78,8 +143,19 @@ class AlbumController extends Controller
      * @param  \App\Models\Album  $album
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Album $album)
+    public function destroy(Request $request)
     {
-        //
+        if (!request()->user()->can('delete-album') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $album = Album::find($request->album_id);
+
+        if ($album->songs->count() > 0) {
+            return redirect()->route('album-home')->with('warning', 'Kan het album niet verwijderen als er nog nummers in het album staan');
+        }
+
+        Album::find($request->album_id)->delete();
+        return redirect()->route('album-home')->with('success', "Het album \"$album->name\" is verwijderd!");
     }
 }

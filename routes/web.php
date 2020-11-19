@@ -50,7 +50,7 @@ Route::prefix('artist')->name('artist-')->group(function(){
 
 # ALBUMS
 Route::get('/albums', [App\Http\Controllers\AlbumController::class, 'index'])->name('album-home');
-Route::get('/albums/{search?}', [App\Http\Controllers\AlbumController::class, 'index'])->name('artist-search');
+Route::get('/albums/{search?}', [App\Http\Controllers\AlbumController::class, 'index'])->name('album-search');
 Route::prefix('album')->name('album-')->group(function () {
     Route::get('/create', [App\Http\Controllers\AlbumController::class, 'create'])->name('create');
     Route::post('/create', [App\Http\Controllers\AlbumController::class, 'store'])->name('store');
