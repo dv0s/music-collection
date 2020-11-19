@@ -18,6 +18,12 @@
     <main class="container mx-auto w-full">
         <div class="flex flex-wrap w-full">
             <div class="w-full lg:w-2/3 min-h-500 py-6">
+
+                @includeWhen(session('info'), 'notifications.info', ['message' => session('info')])
+                @includeWhen(session('success'), 'notifications.success', ['message' => session('success')])
+                @includeWhen(session('warning'), 'notifications.warning', ['message' => session('warning')])
+                {{-- @includeWhen(isset('errors'), 'notifications.errors') --}}
+
                 <div class="flex w-full p-4 bg-white min-h-full">
                     @yield('main')
                 </div>
