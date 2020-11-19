@@ -58,8 +58,8 @@
                         </div>
                     </td>
                     <td class="text-left py-3 px-4 hidden md:block">
-                        <div class="flex flex-row">
-                            <a href="{{ route('overlord-permission-edit', [$permission->id]) }}" class="text-sm text-yellow-600 hover:text-yellow-700 hover:underline px-2 mt-0">edit</a>
+                        <div class="flex flex-row flex-wrap w-full">
+                            <a href="{{ route('overlord-permission-edit', [$permission->id]) }}" class="text-sm text-yellow-600 hover:text-yellow-700 hover:underline uppercase mx-3 mt-1">edit</a>
                             <form action="{{ route('overlord-permission-destroy') }}" 
                                     method="POST" 
                                     onsubmit="do_delete('delete_{{ $permission->id }}', '{{ $permission->name }}'); return false" 
@@ -67,7 +67,7 @@
                                 @csrf
                                 @method("DELETE")
                                 <input type="hidden" name="permission_id" value="{{ $permission->id }}">
-                                <button type="submit" class="text-sm text-red-600 hover:text-red-700 hover:underline px-2 mt-0">delete</button>
+                                <button type="submit" class="text-sm text-red-600 hover:text-red-700 hover:underline uppercase mx-3 mt-1">delete</button>
                             </form>
                         </div>
                     </td>

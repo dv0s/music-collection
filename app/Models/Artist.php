@@ -9,6 +9,10 @@ class Artist extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'formed_at' => 'date'
+    ];
+
     /**
      * Relationships
      */

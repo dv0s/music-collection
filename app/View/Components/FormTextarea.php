@@ -6,14 +6,22 @@ use Illuminate\View\Component;
 
 class FormTextarea extends Component
 {
+    public $name;
+    public $label;
+    public $value;
+    public $id;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($name, $label, $value, $id)
     {
-        //
+        $this->name = $name;
+        $this->label = $label;
+        $this->value = $value;
+        $this->id = $id;
     }
 
     /**

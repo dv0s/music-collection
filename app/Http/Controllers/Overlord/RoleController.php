@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -68,6 +69,11 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
+        if($role->slug === config('app.superuser_role'))
+        {
+            return redirect()->back()->with('info', "Can not edit super user role");
+        }
+        
         return view('roles.show', compact('role'));
     }
 
@@ -79,6 +85,10 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        if ($role->slug === config('app.superuser_role')) {
+            return redirect()->back()->with('info', "Can not edit super user role");
+        }
+        
         $permissions = Permission::all();
         return view('roles.edit', compact('role', 'permissions'));
     }
@@ -92,6 +102,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        if ($role->slug === config('app.superuser_role')) {
+            return redirect()->back()->with('info', "Can not edit super user role");
+        }
+
         $request->validate([
             'name' => 'required'
         ]);
@@ -113,7 +127,12 @@ class RoleController extends Controller
      */
     public function destroy(Request $request)
     {
-        Role::findOrFail($request->role_id)->delete();
+        $role = Role::findOrFail($request->role_id);
+        if ($role->slug === config('app.superuser_role')) {
+            return redirect()->back()->with('info', "Can not delete super user role");
+        }
+
+        $role->delete();
         return redirect()->route('overlord-role-home');
     }
 }
