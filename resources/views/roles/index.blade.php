@@ -50,8 +50,9 @@
                         </div>
                     </td>
                     <td class="text-left py-3 px-4">
+                        @if ($role->slug !== config('app.superuser_role'))
                         <div class="flex flex-row">
-                            <a href="{{ route('overlord-role-edit', [$role->id]) }}" class="text-sm text-yellow-600 hover:text-yellow-700 hover:underline px-2 mt-0">edit</a>
+                            <a href="{{ route('overlord-role-edit', [$role->id]) }}" class="text-sm text-yellow-600 hover:text-yellow-700 hover:underline uppercase mx-3 mt-1">edit</a>
                             <form action="{{ route('overlord-role-destroy') }}" 
                                     method="POST" 
                                     onsubmit="do_delete('delete_{{ $role->id }}', '{{ $role->name }}'); return false" 
@@ -59,9 +60,10 @@
                                 @csrf
                                 @method("DELETE")
                                 <input type="hidden" name="role_id" value="{{ $role->id }}">
-                                <button type="submit" class="text-sm text-red-600 hover:text-red-700 hover:underline px-2 mt-0">delete</button>
+                                <button type="submit" class="text-sm text-red-600 hover:text-red-700 hover:underline uppercase mx-3 mt-1">delete</button>
                             </form>
                         </div>
+                        @endif
                     </td>
                 </tr>                    
                 @endforeach
