@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class ArtistController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,13 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        return view('artists.index');
+        if (!is_null(request()->get('search'))) {
+            $artists = Artist::where('name', 'LIKE', '%' . request()->get('search') . '%')->get();
+            return view('artists.index', compact('artists'));
+        }
+
+        $artists = Artist::paginate(15);
+        return view('artists.index', compact('artists'));
     }
 
     /**
@@ -24,7 +36,11 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        //
+        if (!request()->user()->can('create-artist') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        return view('artists.create');
     }
 
     /**
@@ -35,7 +51,24 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!request()->user()->can('create-artist') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $request->validate([
+            'name' => 'required',
+            'formed_at' => 'required|date'
+        ]);
+
+        $artist = new Artist();
+        $artist->name = Str::title($request->name);
+        $artist->slug = Str::slug($request->name);
+        $artist->formed_at = $request->formed_at;
+        $artist->description = $request->description;
+
+        $artist->save();
+
+        return redirect()->route('artist-home');
     }
 
     /**
@@ -46,7 +79,7 @@ class ArtistController extends Controller
      */
     public function show(Artist $artist)
     {
-        //
+        return view('artists.show', compact('artist'));
     }
 
     /**
@@ -57,7 +90,11 @@ class ArtistController extends Controller
      */
     public function edit(Artist $artist)
     {
-        //
+        if (!request()->user()->can('edit-artist') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        return view('artists.edit', compact('artist'));
     }
 
     /**
@@ -69,7 +106,23 @@ class ArtistController extends Controller
      */
     public function update(Request $request, Artist $artist)
     {
-        //
+        if (!request()->user()->can('edit-artist') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $request->validate([
+            'name' => 'required',
+            'formed_at' => 'required|date'
+        ]);
+
+        $artist->name = Str::title($request->name);
+        $artist->slug = Str::slug($request->name);
+        $artist->formed_at = $request->formed_at;
+        $artist->description = $request->description;
+
+        $artist->save();
+
+        return redirect()->route('artist-home')->with('success', "Het artist is aangepast!");
     }
 
     /**
@@ -78,8 +131,19 @@ class ArtistController extends Controller
      * @param  \App\Models\Artist  $artist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Artist $artist)
+    public function destroy(Request $request)
     {
-        //
+        if (!request()->user()->can('delete-artist') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $artist = Artist::find($request->artist_id);
+
+        if ($artist->albums->count() > 0) {
+            return redirect()->route('artist-home')->with('warning', 'Kan de artiest niet verwijderen als er nog albums bestaan van de artiest');
+        }
+
+        Artist::find($request->artist_id)->delete();
+        return redirect()->route('artist-home')->with('success', "Het artist \"$artist->name\" is verwijderd!");
     }
 }
