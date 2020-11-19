@@ -22,7 +22,7 @@
 <div class="flex flex-col w-full">
     <div class="flex flex-wrap flex-row w-full">
         <div class="row w-2/3">
-            <h1 class="text-2xl">Albums Home</h1>
+            <h1 class="text-2xl">Albums Overzicht</h1>
         </div>
         <div class="row w-1/3">
             <form action="{{ route('album-search') }}">

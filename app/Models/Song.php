@@ -12,6 +12,11 @@ class Song extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'release' => 'date',
+        'length' => 'datetime'
+    ];
+
     /**
      * Relationships
      */
@@ -19,11 +24,6 @@ class Song extends Model
     public function album()
     {
         return $this->belongsTo(Album::class);
-    }
-
-    public function artist()
-    {
-        return $this->belongsTo(Artist::class);
     }
 
     /**
