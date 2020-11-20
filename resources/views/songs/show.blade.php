@@ -5,7 +5,17 @@
 @endpush
 
 @push('script')
-    {{--content--}}
+    <script type="text/javascript">
+        function do_delete(form, name)
+        {
+            if(confirm("Do you really want to delete " +name+ "?")){
+                document.getElementById(form).submit();
+            }
+
+            return false;
+        }
+
+    </script>
 @endpush
 
 @section('main')
@@ -63,6 +73,7 @@
             </svg>
             <span class="ml-3">Terug</span>
         </a>
+        @permission('edit-song')
         <a class="text-blue-400 hover:text-blue-500 hover:underline flex flex-row items-center h-12 px-4 rounded-lg bg-gray-100" href="{{ route('song-edit', [$song->id]) }}">
             <svg class="w-6 h-6" 
                     fill="none" 
@@ -73,6 +84,22 @@
             </svg>
             <span class="ml-3">Nummer aanpassen</span>
         </a>
+        @endpermission
+        @permission('delete-song')
+        <form action="{{ route('song-destroy') }}" 
+                class="w-full"
+                method="POST" 
+                onsubmit="do_delete('delete_{{ $song->id }}', '{{ $song->title }}'); return false" 
+                id="delete_{{ $song->id }}">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" name="song_id" value="{{ $song->id }}">
+            <button class="text-red-400 hover:text-red-500 hover:underline w-full flex flex-row items-center h-12 px-4 rounded-lg bg-gray-100 uppercase">
+                <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                <span>nummer verwijderen</span>
+            </button>
+        </form> 
+        @endpermission
     </div>
 </div>
 @endsection

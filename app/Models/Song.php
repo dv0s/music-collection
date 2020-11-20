@@ -12,6 +12,11 @@ class Song extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'release' => 'date',
+        'length' => 'datetime'
+    ];
+
     /**
      * Relationships
      */
@@ -21,16 +26,11 @@ class Song extends Model
         return $this->belongsTo(Album::class);
     }
 
-    public function artist()
-    {
-        return $this->belongsTo(Artist::class);
-    }
-
     /**
      * Accessors
      */
 
      public function getLengthAttribute($value){
-         return Carbon::parse($value)->format('i:s');
+         return Carbon::parse($value)->format('H:i:s');
      }
 }

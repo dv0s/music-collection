@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Song;
 use App\Models\Album;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class SongController extends Controller
@@ -32,7 +33,13 @@ class SongController extends Controller
      */
     public function create()
     {
-        //
+        if (!request()->user()->can('create-song') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $albums = Album::all();
+
+        return view('songs.create', compact('albums'));
     }
 
     /**
@@ -43,7 +50,27 @@ class SongController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!request()->user()->can('create-song') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $request->validate([
+            'title' => 'required',
+            'release' => 'required|date',
+            'length' => 'required'
+        ]);
+
+        $song = new Song();
+        $song->album_id = $request->album_id;
+        $song->title = Str::title($request->title);
+        $song->slug = Str::slug($request->title);
+        $song->release = $request->release;
+        $song->length = $request->length;
+        $song->rating = $request->rating;
+        
+        $song->save();
+
+        return redirect()->route('song-home')->with('success', "Nummer is aangemaakt");
     }
 
     /**
@@ -78,7 +105,26 @@ class SongController extends Controller
      */
     public function update(Request $request, Song $song)
     {
-        //
+        if (!request()->user()->can('edit-song') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+
+        $request->validate([
+            'title' => 'required',
+            'release' => 'required|date',
+            'length' => 'required'
+        ]);
+
+        $song->album_id = $request->album_id;
+        $song->title = Str::title($request->title);
+        $song->slug = Str::slug($request->title);
+        $song->release = $request->release;
+        $song->length = $request->length;
+        $song->rating = $request->rating;
+
+        $song->save();
+
+        return redirect()->route('song-home')->with('success', "$song->title is aangepast");
     }
 
     /**
@@ -87,8 +133,13 @@ class SongController extends Controller
      * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Song $song)
+    public function destroy(Request $request)
     {
-        //
+        if (!request()->user()->can('edit-song') && !request()->user()->hasRole(config('app.superuser_role'))) {
+            return abort(403);
+        }
+        $song = Song::find($request->song_id);
+        $song->delete();
+        return redirect()->route('song-home')->with('success', "$song->title is succesvol verwijderd");
     }
 }

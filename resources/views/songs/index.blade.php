@@ -34,13 +34,20 @@
     </div>
 
     <div class="py-8 w-full">
-        @role('manager')
         <div class="flex flew-row flex-wrap">
             @permission('create-song')
-            <a href="{{ route('song-create') }}">Nummer aanmaken</a>
+            <a href="{{ route('song-create') }}" class="flex flew-row flex-wrap text-green-500 mb-2">
+                <svg class="w-6 h-6" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24" 
+                        xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span>Nummer aanmaken</span>
+            </a>
             @endpermission
         </div>
-        @endrole
         @empty(request()->get('search'))
         <div class="mb-6">
         {{ $songs->onEachSide(3)->links('vendor.pagination.tailwind') }}

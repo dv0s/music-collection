@@ -14,16 +14,15 @@
 <div class="flex flex-col flex-wrap w-full">
     <h1 class="text-2xl text-gray-800 mb-6">Nummer aanmaken</h1>
 
-    <form action="{{ route('song-update', [$song->id]) }}" method="POST" class="w-full" id="album">
+    <form action="{{ route('song-store') }}" method="POST" class="w-full" id="album">
         @csrf
-        @method('PUT')
 
         <div class="flex flex-row flex-wrap">
             <section class="w-1/2 flex flex-col flex-wrap">
-                <x-form-input type="text" name="title" id="title" label="Titel" :value="old('title') ?? $song->title"></x-form-input>
-                <x-form-input type="date" name="release" id="release" label="Uitgebracht" :value="old('release') ?? $song->release->format('Y-m-d')" ></x-form-input>
-                <x-form-input type="time" name="length" id="length" label="Duur" :value="old('length') ?? $song->length" step="1"></x-form-input>
-                <x-form-input type="number" name="rating" id="rating" label="Rating" :value="old('rating') ?? $song->rating" min="1" max="5"></x-form-input>
+                <x-form-input type="text" name="title" id="title" label="Titel" :value="old('title')"></x-form-input>
+                <x-form-input type="date" name="release" id="release" label="Uitgebracht" :value="old('release')" ></x-form-input>
+                <x-form-input type="time" name="length" id="length" label="Duur" :value="old('length')" step="1"></x-form-input>
+                <x-form-input type="number" name="rating" id="rating" label="Rating" :value="old('rating') ?? '1'" min="1" max="5"></x-form-input>
 
                 <div class="flex-row">
                     <a class="bg-gray-200 hover:bg-gray-300 px-4 py-2 uppercase text-sm font-semibold ml-3" href="{{ url()->previous() }}">Terug</a>
