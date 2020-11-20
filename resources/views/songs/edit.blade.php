@@ -4,70 +4,47 @@
     {{--content--}}
 @endpush
 
-@section('main')
-<div class="flex flex-wrap">
-
-
-<h1 class="text-3xl">{{ $song->title }} aanpassen</h1>
-    <form class="w-full max-w-lg">
-        <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                Song title
-            </label>
-            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="title" type="text" value="{{ $song->title }}">
-            <p class="text-gray-600 text-xs italic"></p>
-            </div>
-        </div>
-        <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                E-mail
-            </label>
-            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="email" type="email">
-            <p class="text-gray-600 text-xs italic"></p>
-            </div>
-        </div>
-        <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                Album
-            </label>
-                <select name="album" id="album" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 select2">
-                    <option value="">Select an album</option>
-                    @foreach ($albums as $album)
-                    <option value="{{ $album->id }}">{{ $album->title }}</option>
-                    @endforeach
-                </select>
-            <p class="text-gray-600 text-xs italic"></p>
-            </div>
-        </div>
-        <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full px-3">
-            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                Message
-            </label>
-            <textarea class=" no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-48 resize-none" id="message"></textarea>
-            <p class="text-gray-600 text-xs italic"></p>
-            </div>
-        </div>
-        <div class="md:flex md:items-center">
-            <div class="md:w-2/3">
-            <a href="{{ url()->previous() }}" class="shadow focus:shadow-outline focus:outline-none text-blue-400 border-blue-400 hover:border-blue-500 border font-bold py-2 mr-4 px-4 rounded">
-                Terug
-            </a>
-            <button class="shadow bg-blue-400 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
-                Opslaan
-            </button>
-            </div>
-            <div class="md:w-2/3"></div>
-        </div>
-    </form>
-</div>
-@endsection
-
 @push('script')
     <script type="text/javascript">
         $('.select2').select2();
     </script>
 @endpush
+
+@section('main')
+<div class="flex flex-col flex-wrap w-full">
+    <h1 class="text-2xl text-gray-800 mb-6">Nummer aanmaken</h1>
+
+    <form action="{{ route('song-update', [$song->id]) }}" method="POST" class="w-full" id="album">
+        @csrf
+        @method('PUT')
+
+        <div class="flex flex-row flex-wrap">
+            <section class="w-1/2 flex flex-col flex-wrap">
+                <x-form-input type="text" name="title" id="title" label="Titel" :value="old('title') ?? $song->title"></x-form-input>
+                <x-form-input type="date" name="release" id="release" label="Uitgebracht" :value="old('release') ?? $song->release->format('Y-m-d')" ></x-form-input>
+                <x-form-input type="time" name="length" id="length" label="Duur" :value="old('length') ?? $song->length" step="1"></x-form-input>
+                <x-form-input type="number" name="rating" id="rating" label="Rating" :value="old('rating') ?? $song->rating" min="1" max="5"></x-form-input>
+
+                <div class="flex-row">
+                    <a class="bg-gray-200 hover:bg-gray-300 px-4 py-2 uppercase text-sm font-semibold ml-3" href="{{ url()->previous() }}">Terug</a>
+                    <button class="bg-blue-500 px-4 py-2 uppercase text-sm font-semibold text-white hover:bg-blue-600 ml-3">Save</button>
+                </div>
+
+            </section>
+            <section class="w-1/2 flex flex-col flex-wrap">
+                <div class="container pl-4 mb-6">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="artist_id">
+                        Album
+                    </label>
+                    <select name="album_id" id="album_id" class="select2 w-full">
+                        @foreach ($albums as $album)
+                            <option value="{{ $album->id }}">{{ $album->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </section>
+        </div>
+    </form>
+
+</div>
+@endsection

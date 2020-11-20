@@ -31,6 +31,6 @@ class Song extends Model
      */
 
      public function getLengthAttribute($value){
-         return Carbon::parse($value)->format('i:s');
+         return Carbon::parse($value)->format('H:i:s');
      }
 }

@@ -34,7 +34,6 @@
     </div>
 
     <div class="py-8 w-full">
-        @role('manager')
         <div class="flex flew-row flex-wrap">
             @permission('create-song')
             <a href="{{ route('song-create') }}" class="flex flew-row flex-wrap text-green-500 mb-2">
@@ -49,7 +48,6 @@
             </a>
             @endpermission
         </div>
-        @endrole
         @empty(request()->get('search'))
         <div class="mb-6">
         {{ $songs->onEachSide(3)->links('vendor.pagination.tailwind') }}

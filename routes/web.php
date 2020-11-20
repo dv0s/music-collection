@@ -68,6 +68,7 @@ Route::prefix('song')->name('song-')->group(function(){
     Route::post('/create', [App\Http\Controllers\SongController::class, 'store'])->name('store');
     Route::get('/edit/{song}', [App\Http\Controllers\SongController::class, 'edit'])->name('edit');
     Route::put('/edit/{song}', [App\Http\Controllers\SongController::class, 'update'])->name('update');
+    Route::delete('/destroy', [App\Http\Controllers\SongController::class, 'destroy'])->name('destroy');
     Route::get('/{song}', [App\Http\Controllers\SongController::class, 'show'])->name('show');
 });
 
