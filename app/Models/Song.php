@@ -19,7 +19,7 @@ class Song extends Model
     ];
 
     protected static function booted(){
-        static::addGlobalScope(new OrderByTitleScope);
+        // static::addGlobalScope(new OrderByTitleScope);
         static::addGlobalScope(new OrderByNewestScope);
     }
 
