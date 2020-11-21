@@ -27,7 +27,7 @@
                 <a href="{{ route('album-show', [$album->id]) }}" class="text-blue-500 hover:text-blue-600 text-lg mb-1">
                     {{ $album->title }} 
                 </a>
-                <span class="italic text-xs mb-3"> - by <a class="text-blue-500 hover:text-blue-600 text-base" href="{{ route('artist-home', [$album->artist->id]) }}">{{ $album->artist->name }}</a></span>
+                <span class="italic text-xs mb-3"> - by <a class="text-blue-500 hover:text-blue-600 text-base" href="{{ route('artist-show', [$album->artist->id]) }}">{{ $album->artist->name }}</a></span>
                 @endforeach
             </div>
         </section>

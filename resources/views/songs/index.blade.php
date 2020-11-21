@@ -69,10 +69,10 @@
                         <td class="text-left py-3 px-4">
                             <div class="flex flex-col flex-wrap">
                                 <a class="hover:text-blue-500 text-lg" href="{{ route('song-show', $song->id) }}">{{ $song->title }}</a>
-                                <span class="text-xs italic hidden md:block">- by <a class="hover:text-blue-500" href="#">{{ $song->album->artist->name }}</a></span>
+                                <span class="text-xs italic hidden md:block">- by <a class="hover:text-blue-500" href="{{ route('artist-show', [$song->album->artist->id]) }}">{{ $song->album->artist->name }}</a></span>
                             </div>
                         </td>
-                        <td class="text-left py-3 px-4 hidden md:block"><a class="hover:text-blue-500" href="#">{{ $song->album->title }}</a></td>
+                        <td class="text-left py-3 px-4 hidden md:block"><a class="hover:text-blue-500" href="{{ route('album-show', [$song->album->id]) }}">{{ $song->album->title }}</a></td>
                         <td class="text-left py-3 px-4">{{ $song->length }}</td>
                         <td class="text-left py-3 px-4 hidden md:block">
                             <div class="flex flex-row">

@@ -26,16 +26,22 @@
         <div class="flex flex-wrap flex-row w-full">
             <div class="p-4">
                 <h4 class="uppercase text-sm">Genre</h4>
-                <span class="text-xl">{{ $song->album->genre->name }}</span>
+                <span class="text-xl">
+                    <a href="{{ route('genre-show', [$song->album->genre->id]) }}" class="text-blue-500 hover:text-blue-600">{{ $song->album->genre->name }}</a>
+                </span>
             </div>
             <div class="p-4">
                 <h4 class="uppercase text-sm">Album</h4>
-                <span class="text-xl">{{ $song->album->title }}</span>
+                <span class="text-xl">
+                    <a href="{{ route('album-show', [$song->album->id]) }}" class="text-blue-500 hover:text-blue-600">{{ $song->album->title }}</a>
+                </span>
             </div>
 
             <div class="p-4">
                 <h4 class="uppercase text-sm">Artiest</h4>
-                <span class="text-xl">{{ $song->album->artist->name }}</span>
+                <span class="text-xl">
+                    <a href="{{ route('artist-show', [$song->album->artist->id]) }}" class="text-blue-500 hover:text-blue-600">{{ $song->album->artist->name }}</a>
+                </span>
             </div>
 
             <div class="p-4">
