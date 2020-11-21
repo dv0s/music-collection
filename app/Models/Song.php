@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\Album;
-use App\Models\Artist;
+use App\Scopes\OrderByNewestScope;
+use App\Scopes\OrderByTitleScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,6 +17,11 @@ class Song extends Model
         'release' => 'date',
         'length' => 'datetime'
     ];
+
+    protected static function booted(){
+        static::addGlobalScope(new OrderByTitleScope);
+        static::addGlobalScope(new OrderByNewestScope);
+    }
 
     /**
      * Relationships
