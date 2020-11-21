@@ -46,20 +46,22 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'password' => 'required|confirmed'
         ]);
 
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = bcrypt('secrettt');
+        $user->password = bcrypt($request->password);
         $user->save();
-
         $user->roles()->attach($request->roles);
 
         foreach($request->roles as $role)
         {
-            $user->permissions()->attach($role->permissions());
+            $r = Role::where('id', $role)->first();
+            $user->permissions()
+                 ->attach($r->permissions);
         }
 
         return redirect()->route('overlord-users-home');

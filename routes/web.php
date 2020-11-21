@@ -33,7 +33,7 @@ Route::prefix('genre')->name('genre-')->group(function(){
     Route::get('/edit/{genre}', [App\Http\Controllers\GenreController::class, 'edit'])->name('edit');
     Route::put('/edit/{genre}', [App\Http\Controllers\GenreController::class, 'update'])->name('update');
     Route::delete('/destory', [App\Http\Controllers\GenreController::class, 'destroy'])->name('destroy');
-    Route::get('/genre/{genre}', [App\Http\COntrollers\GenreController::class, 'show'])->name('show');
+    Route::get('/{genre}', [App\Http\COntrollers\GenreController::class, 'show'])->name('show');
 });
 
 # ARTISTS

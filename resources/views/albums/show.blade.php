@@ -19,6 +19,28 @@
 
     <div class="w-full flex flex-row">
         <section class="w-1/2 flex flex-col flex-wrap">
+            <div class="flex flex-row flex-wrap">
+                <div class="flex-col">
+                    <h2 class="uppercase text-base text-gray-800 ml-3">
+                        Artiest
+                    </h2>
+                    <div class="flex flex-col flex-wrap ml-3 py-2 px-6 mb-6">
+                        <span class="text-lg mb-1">
+                            <a href="{{ route('artist-show', [$album->artist->id]) }}" class="text-blue-500 hover:text-blue-600">{{ $album->artist->name }}</a> 
+                        </span>
+                    </div>
+                </div>
+                <div class="flex-col">
+                    <h2 class="uppercase text-base text-gray-800 ml-3">
+                        Genre
+                    </h2>
+                    <div class="flex flex-col flex-wrap ml-3 py-2 px-6 mb-6">
+                        <span class="text-lg mb-1">
+                            <a href="{{ route('genre-show', [$album->genre->id]) }}" class="text-blue-500 hover:text-blue-600">{{ $album->genre->name }}</a> 
+                        </span>
+                    </div>
+                </div>
+            </div>
             <h2 class="uppercase text-base text-gray-800 ml-3">
                 Uitgekomen op
             </h2>
@@ -43,7 +65,7 @@
             </h2>
             <div class="flex flex-col flex-wrap ml-3 py-2 px-6">
                 @foreach ($album->songs as $song)
-                <a href="{{ route('album-show', [$song->id]) }}" class="text-blue-500 hover:text-blue-600 text-lg mb-1 flex flex-row">
+                <a href="{{ route('song-show', [$song->id]) }}" class="text-blue-500 hover:text-blue-600 text-lg mb-1 flex flex-row">
                     <svg class="w-6 h-6 mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
                     <span>{{ $song->title }}</span> 
                 </a>
