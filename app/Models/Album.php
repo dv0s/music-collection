@@ -2,12 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Scopes\OrderByNewestScope;
+use App\Scopes\OrderByTitleScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Album extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'released_at' => 'date'
+    ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new OrderByTitleScope);
+        static::addGlobalScope(new OrderByNewestScope);
+    }
 
     /**
      * Relationships
@@ -21,5 +33,10 @@ class Album extends Model
     public function artist()
     {
         return $this->belongsTo(Artist::class);
+    }
+
+    public function songs()
+    {
+        return $this->hasMany(Song::class);
     }
 }

@@ -20,6 +20,9 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "alpinejs": "^2.7.3",
+        "jquery": "^3.5.1",
+        "select2": "^4.0.13",
         "tailwindcss": "^1.9.6"
     }
 }

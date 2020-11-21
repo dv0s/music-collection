@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers\Overlord;
 
-use App\Http\Controllers\Controller;
+use App\Models\Role;
+use App\Models\Permission;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PermissionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('role:overlord');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        $permissions = Permission::all();
+        return view('permissions.index', compact('permissions'));
     }
 
     /**
@@ -24,7 +35,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+        return view('permissions.create', compact('roles'));
     }
 
     /**
@@ -35,7 +47,18 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $permission = new Permission();
+        $permission->name = $request->name;
+        $permission->slug = Str::slug($request->name);
+        $permission->save();
+
+        $permission->roles()->attach($request->roles);
+
+        return redirect()->route('overlord-permission-home');
     }
 
     /**
@@ -44,9 +67,9 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Permission $permission)
     {
-        //
+        return view('permissions.show', compact('permission'));
     }
 
     /**
@@ -55,9 +78,10 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Permission $permission)
     {
-        //
+        $roles = Role::all();
+        return view('permissions.edit', compact('permission', 'roles'));
     }
 
     /**
@@ -67,9 +91,19 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Permission $permission)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $permission->name = $request->name;
+        $permission->slug = Str::slug($request->name);
+        $permission->save();
+
+        $permission->roles()->sync($request->roles);
+
+        return redirect()->route('overlord-permission-home');
     }
 
     /**
@@ -78,8 +112,9 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Permission::findOrFail($request->permission_id)->delete();
+        return redirect()->route('overlord-permission-home');
     }
 }

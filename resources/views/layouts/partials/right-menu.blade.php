@@ -87,23 +87,6 @@
                     <span class="ml-3">Nummers</span>
                 </a>
             </li>
-            @role('manager')
-            <li class="my-px">
-                <a href="#"
-                    class="flex flex-row items-center h-12 px-4 rounded-lg text-gray-600 hover:bg-gray-100">
-                    <span class="flex items-center justify-center text-lg text-green-400">
-                        <svg class="w-6 h-6" 
-                                fill="none" 
-                                stroke="currentColor" 
-                                viewBox="0 0 24 24" 
-                                xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                        </svg>
-                    </span>
-                    <span class="ml-3">Manage databank</span>
-                </a>
-            </li>
-            @endrole
             @role('overlord')
             <li class="my-px">
                 <span class="flex font-medium text-sm text-gray-400 px-4 my-4 uppercase">Overlord menu</span>
@@ -123,7 +106,7 @@
                 </a>
             </li>
             <li class="my-px">
-                <a href="{{ route('overlord-permission-home') }}"
+                <a href="{{ route('overlord-role-home') }}"
                     class="flex flex-row items-center h-12 px-4 rounded-lg text-gray-600 hover:bg-gray-100">
                     <span class="flex items-center justify-center text-lg text-gray-400">
                         <svg class="w-6 h-6" 
@@ -138,7 +121,7 @@
                 </a>
             </li>
             <li class="my-px">
-                <a href="#"
+                <a href="{{ route('overlord-users-home') }}"
                     class="flex flex-row items-center h-12 px-4 rounded-lg text-gray-600 hover:bg-gray-100">
                     <span class="flex items-center justify-center text-lg text-gray-400">
                         <svg class="w-6 h-6" 
