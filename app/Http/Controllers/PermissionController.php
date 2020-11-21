@@ -18,7 +18,7 @@ class PermissionController extends Controller
         $overlord_role->save();
         $overlord_role->permissions()->attach($overlord_perm);
 
-        $overlord_role = Role::where('slug', 'overlord')->first();
+        $overlord_role = Role::where('slug', config('app.superuser_role'))->first();
 
         $permissions_array = [
             "createUser" => ["create-user", "Create User"],

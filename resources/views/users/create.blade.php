@@ -21,6 +21,9 @@
             <div class="flex flex-col flex-wrap w-full">
                 <x-form-input type="text" name="name" id="name" label="naam" :value="old('name')" required="true" />
                 <x-form-input name="email" type="email" label="e-mailadres" :value="old('email')" id="email" required="true" />
+                <x-form-input name="password" type="password" label="wachtwoord" :value="old('password')" id="password" required="true" />
+                <x-form-input name="password_confirmation" type="password" label="bevestig wachtwoord" :value="old('password_confirmation')" id="password_confirmation" required="true" />
+
             </div>
         </div>
 
